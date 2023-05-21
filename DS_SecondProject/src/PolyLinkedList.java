@@ -55,7 +55,9 @@ public class PolyLinkedList {
                 sb.append(coefficients[i]).append("X^").append(degrees[i]);
                 break;
             }
-            sb.append(coefficients[i]).append("X^").append(degrees[i]).append("+");
+            sb.append(coefficients[i]).append("X^").append(degrees[i]);
+            if(coefficients[i+1] >= 0)
+                sb.append("+");
         }
         return sb.toString();
     }
