@@ -52,10 +52,12 @@ public class PolyLinkedList {
         for (int i = 0; i < degrees.length; i++) {
             add(coefficients[i], degrees[i]);
             if ((i + 1) == degrees.length) {//if we reached the last element don't append a '+' in the end
-                sb.append(coefficients[i]).append("X^").append(degrees[i]);
+                sb.append(coefficients[i]);
                 break;
             }
-            sb.append(coefficients[i]).append("X^").append(degrees[i]);
+            sb.append(coefficients[i]).append("X");
+            if (degrees[i] != 1)
+                sb.append("^").append(degrees[i]);
             if(coefficients[i+1] >= 0)
                 sb.append("+");
         }
