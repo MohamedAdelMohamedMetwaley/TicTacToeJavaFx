@@ -12,7 +12,7 @@ public class Main {
             System.out.println("""
                     ------------------------------------------
                     1. Add a polynomial to the list
-                    2. Evaluate a polynomial from the list
+                    2. Evaluate a polynomial from the list (Second Degree Only)
                     3. Add 2 Polynomials from the list
                     4. Subtract 2 Polynomials
                     5. Multiply 2 Polynomials
@@ -30,7 +30,8 @@ public class Main {
                     System.out.print("Which Polynomial from the list do you want to evaluate? ");
                     int p = sc.nextInt()-1;
                     sc.nextLine();
-
+                    double[] solutions = ev.evaluate(ev.polyLinkedLists.get(p));
+                    System.out.println("Result: "+solutions[0]+", "+solutions[1]);
                 } case 3 -> {
                     System.out.print("First Polynomial: ");
                     int p1 = sc.nextInt()-1;

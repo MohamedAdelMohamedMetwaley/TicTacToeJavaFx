@@ -73,6 +73,22 @@ public class EvaluatePolynomial {
         return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
     }
 
+    public double[] evaluate(PolyLinkedList expression){
+        if (expression.size() > 3) {
+            System.out.println("Please choose a quadratic equation..");
+            return new double[]{0, 0};
+        }
+        int a = expression.get(0).getCoefficient();
+        int b = expression.get(1).getCoefficient();
+        int c = expression.get(2).getCoefficient();
+
+        double root = Math.sqrt(b*b - 4*a*c);
+        double result1 = (-b + root)/(2*a);
+        double result2 = (-b - root)/(2*a);
+
+        return new double[]{result1, result2};
+    }
+
     public void printExpressions(){
         if (polyLinkedLists.isEmpty()) {
             System.out.println("List is empty");
