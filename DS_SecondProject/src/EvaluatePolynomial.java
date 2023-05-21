@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class EvaluatePolynomial {
     ArrayList<PolyLinkedList> polyLinkedLists = new ArrayList<>();
 
-    private int[] getDegrees(int degree) {
+    private int[] getDegrees(int degree) {//fills the degrees (ex: if the degree of the expression is 2, then the expression will be aX^2+bX^1+cX^0)
         int[] degrees = new int[degree + 1];
         for (int i = 0; i < degree; i++) {
             degrees[i] = degree - i;
@@ -12,12 +12,12 @@ public class EvaluatePolynomial {
         return degrees;
     }
 
-    public void createPolynomial(int degree) {
+    public void createPolynomial(int degree) {//calls the two methods getDegrees & getCoefficient and created the expression, then adds it to the list
         int[] degrees = getDegrees(degree);
         polyLinkedLists.add(new PolyLinkedList(degrees, getCoefficient(degrees)));
     }
 
-    private int[] getCoefficient(int[] degrees) {
+    private int[] getCoefficient(int[] degrees) {//gets coefficients of each X in the expression from the user
         Scanner sc = new Scanner(System.in);
         int[] coefficients = new int[degrees.length];
         for (int i = 0; i < degrees.length; i++) {
@@ -28,17 +28,17 @@ public class EvaluatePolynomial {
         return coefficients;
     }
 
-    public String addition(PolyLinkedList p1, PolyLinkedList p2, boolean add) {
+    public String addition(PolyLinkedList p1, PolyLinkedList p2, boolean add) {//this handles the addition (& the subtraction, the 'add' variable is false if the operation is subtraction)
         int[] degrees;
         int[] coefficients;
 
         int sign = 1;
         boolean bigFirst = true;
-        if (!add) {
+        if (!add) {//we will use this with subtraction to change the sign of the second operand (to the right of the positive sign)
             sign = -1;
         }
 
-        if (p1.size() == p2.size()) {
+        if (p1.size() == p2.size()) {//the easy case is: the two expressions are the same degree
             degrees = new int[p1.size()];
             coefficients = new int[p1.size()];
             for (int i = 0; i < p1.size(); i++) {
@@ -46,27 +46,28 @@ public class EvaluatePolynomial {
                 coefficients[i] = p1.get(i).getCoefficient() + (sign * p2.get(i).getCoefficient());
             }
         } else {
-            PolyLinkedList biggerDegree = p1.size() > p2.size() ? p1 : p2;
-            PolyLinkedList smallerDegree = p1.size() < p2.size() ? p1 : p2;
+            PolyLinkedList biggerDegree = p1.size() > p2.size() ? p1 : p2;//assign the polynomial with the higher degree to this variable
+            PolyLinkedList smallerDegree = p1.size() < p2.size() ? p1 : p2;//and the poly with the less degree to this variable
             int difference = biggerDegree.size() - smallerDegree.size();
 
             degrees = new int[biggerDegree.size()];
             coefficients = new int[biggerDegree.size()];
             if (p1.size() != biggerDegree.size()){
+                //this variable will be important in determining which variable will be first (to the left of the negative sign) during the subtraction
                 bigFirst = false;
             }
-            for(int i = 0; i < difference; i++){
+            for(int i = 0; i < difference; i++){//fill the degrees that is in the bigger expression and not in the smaller one
                 degrees[i] = biggerDegree.get(i).getPower();
+                //if it is a subtraction and p1 is not the bigger expression: multiply the coefficients of p2 by -1 (as if the expression was 0-aX^b)
                 coefficients[i] = !add && !bigFirst ? -1 * biggerDegree.get(i).getCoefficient() : biggerDegree.get(i).getCoefficient();
             }
             for (int i = difference; i < biggerDegree.size(); i++){
                 degrees[i] = biggerDegree.get(i).getPower();
-                int big = biggerDegree.get(i).getCoefficient();
+                int big = biggerDegree.get(i).getCoefficient();//
                 int small = smallerDegree.get(i-difference).getCoefficient();
                 //if it is a subtraction and the second expression 'p2' is bigger then swap it so that p1 is to the left of the minus
                 int result = !add && !bigFirst ? small/*p1*/ - big/*p2*/ : big + sign*small;
                 coefficients[i] = result;
-//                coefficients[i] = biggerPoly.get(i).getCoefficient() + (sign * smallerPoly.get(i-difference).getCoefficient());
             }
         }
         return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
