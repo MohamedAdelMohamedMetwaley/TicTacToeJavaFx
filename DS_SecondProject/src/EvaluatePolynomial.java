@@ -52,28 +52,28 @@ public class EvaluatePolynomial {
 
             degrees = new int[biggerDegree.size()];
             coefficients = new int[biggerDegree.size()];
-            if (p1.size() != biggerDegree.size()){
+            if (p1.size() != biggerDegree.size()) {
                 //this variable will be important in determining which variable will be first (to the left of the negative sign) during the subtraction
                 bigFirst = false;
             }
-            for(int i = 0; i < difference; i++){//fill the degrees that is in the bigger expression and not in the smaller one
+            for (int i = 0; i < difference; i++) {//fill the degrees that is in the bigger expression and not in the smaller one
                 degrees[i] = biggerDegree.get(i).getPower();
                 //if it is a subtraction and p1 is not the bigger expression: multiply the coefficients of p2 by -1 (as if the expression was 0-aX^b)
                 coefficients[i] = !add && !bigFirst ? -1 * biggerDegree.get(i).getCoefficient() : biggerDegree.get(i).getCoefficient();
             }
-            for (int i = difference; i < biggerDegree.size(); i++){
+            for (int i = difference; i < biggerDegree.size(); i++) {
                 degrees[i] = biggerDegree.get(i).getPower();
                 int big = biggerDegree.get(i).getCoefficient();//
-                int small = smallerDegree.get(i-difference).getCoefficient();
+                int small = smallerDegree.get(i - difference).getCoefficient();
                 //if it is a subtraction and the second expression 'p2' is bigger then swap it so that p1 is to the left of the minus
-                int result = !add && !bigFirst ? small/*p1*/ - big/*p2*/ : big + sign*small;
+                int result = !add && !bigFirst ? small/*p1*/ - big/*p2*/ : big + sign * small;
                 coefficients[i] = result;
             }
         }
         return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
     }
 
-    public double[] evaluate(PolyLinkedList expression){
+    public double[] evaluate(PolyLinkedList expression) {
         if (expression.size() > 3) {
             System.out.println("Please choose a quadratic equation..");
             return new double[]{0, 0};
@@ -82,20 +82,37 @@ public class EvaluatePolynomial {
         int b = expression.get(1).getCoefficient();
         int c = expression.get(2).getCoefficient();
 
-        double root = Math.sqrt(b*b - 4*a*c);
-        double result1 = (-b + root)/(2*a);
-        double result2 = (-b - root)/(2*a);
+        double root = Math.sqrt(b * b - 4 * a * c);
+        double result1 = (-b + root) / (2 * a);
+        double result2 = (-b - root) / (2 * a);
 
         return new double[]{result1, result2};
     }
 
-    public void printExpressions(){
+    public String multiply(PolyLinkedList p1, PolyLinkedList p2) {
+        int[] degrees = new int[p1.size() + p2.size()-1];
+        int[] coefficients = new int[p1.size() + p2.size()-1];
+        //fills the initial values to both arrays
+        for (int i = degrees.length-1; i > 0; i--) {
+            degrees[degrees.length-1-i] = i;//the highest degree is at index 0
+            coefficients[i] = 0;
+        }
+
+        for (int i = p1.size()-1; i >= 0; i--) {
+            for (int j = p2.size()-1; j >= 0; j--) {
+                coefficients[i+j] += p1.get(i).getCoefficient()*p2.get(j).getCoefficient();
+            }
+        }
+        return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
+    }
+
+    public void printExpressions() {
         if (polyLinkedLists.isEmpty()) {
             System.out.println("List is empty");
             return;
         }
-        for (int i = 0; i < polyLinkedLists.size(); i++){
-            System.out.println((i+1)+". "+polyLinkedLists.get(i).getPolynomialExpression());
+        for (int i = 0; i < polyLinkedLists.size(); i++) {
+            System.out.println((i + 1) + ". " + polyLinkedLists.get(i).getPolynomialExpression());
         }
     }
 }
