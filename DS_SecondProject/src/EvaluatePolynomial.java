@@ -28,7 +28,7 @@ public class EvaluatePolynomial {
         return coefficients;
     }
 
-    public String addition(PolyLinkedList p1, PolyLinkedList p2, boolean add) {//this handles the addition (& the subtraction, the 'add' variable is false if the operation is subtraction)
+    public PolyLinkedList addition(PolyLinkedList p1, PolyLinkedList p2, boolean add) {//this handles the addition (& the subtraction, the 'add' variable is false if the operation is subtraction)
         int[] degrees;
         int[] coefficients;
 
@@ -70,7 +70,7 @@ public class EvaluatePolynomial {
                 coefficients[i] = result;
             }
         }
-        return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
+        return new PolyLinkedList(degrees, coefficients);
     }
 
     public double[] evaluate(PolyLinkedList expression) {
@@ -89,7 +89,7 @@ public class EvaluatePolynomial {
         return new double[]{result1, result2};
     }
 
-    public String multiply(PolyLinkedList p1, PolyLinkedList p2) {
+    public PolyLinkedList multiply(PolyLinkedList p1, PolyLinkedList p2) {
         int[] degrees = new int[p1.size() + p2.size()-1];
         int[] coefficients = new int[p1.size() + p2.size()-1];
         //fills the initial values to both arrays
@@ -103,7 +103,7 @@ public class EvaluatePolynomial {
                 coefficients[i+j] += p1.get(i).getCoefficient()*p2.get(j).getCoefficient();
             }
         }
-        return new PolyLinkedList(degrees, coefficients).getPolynomialExpression();
+        return new PolyLinkedList(degrees, coefficients);
     }
 
     public void printExpressions() {
