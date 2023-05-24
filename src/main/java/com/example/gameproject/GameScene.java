@@ -55,7 +55,6 @@ public class GameScene {
 
         vBox.setStyle("-fx-background-color: darkslategrey");
 
-        //font: Edwardian Script ITC
         txt.setFont(Font.font("Edwardian Script ITC", 50));
         txt.setFill(Color.BEIGE);
         txt.setStrokeWidth(2);
@@ -91,7 +90,7 @@ public class GameScene {
         for (int i = 0; i < xoBtns.length; i++) {//add action event for all the buttons
             int finalI = i;
             xoBtns[i].setOnAction(actionEvent -> {//if the user clicks the button, and it is empty update 'choice' variable and call the method 'handleMatch'
-                    choice = finalI;
+                choice = finalI;
                 if (xoBtns[choice].getText().isEmpty()) {//if the button selected doesn't already have an X or an O
                     handleMatch();
                 }
@@ -146,8 +145,7 @@ public class GameScene {
     public void markPlayer() {
         int turn = players[0].getTurn();
         for (int i = 0; i < 2; i++) {
-            if (i == turn)
-                playersLabels[turn].getStyleClass().add("turn");
+            if (i == turn) playersLabels[turn].getStyleClass().add("turn");
             else {
                 playersLabels[i].getStyleClass().clear();
                 playersLabels[i].getStyleClass().add("xoBtn");
@@ -158,6 +156,4 @@ public class GameScene {
     Scene getScene() {
         return new Scene(vBox, 460, 500);
     }
-
-
 }
