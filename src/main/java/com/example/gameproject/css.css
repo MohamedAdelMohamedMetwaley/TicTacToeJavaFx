@@ -1,0 +1,28 @@
+Button{
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-font-family:'Informal Roman',  Georgia, Times, 'Times New Roman', serif;
+}
+
+.xoBtn{
+    -fx-font-size: 30;
+}
+
+Label{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family:'Informal Roman',  Georgia, Times, 'Times New Roman', serif;
+}
+
+.turn{
+    -fx-font-size: 30;
+    -fx-border-color: #3a376b;
+    -fx-border-radius: 5;
+    -fx-border-width: 9;
+    -fx-background-radius: 7;
+    -fx-background-color: #3a376b;
+
+}
+
+
